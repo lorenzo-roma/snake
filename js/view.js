@@ -6,13 +6,16 @@ export default class GameView {
     _adapter;
     _field;
     _stats;
+    _directionButtons;
     _endPopup;
 
     constructor(config) {
         this._field = new GameFieldView(config);
         this._stats = new GameStatsView(config);
+        this._directionButtons = new GameDirectionButtons(config);
         this._endPopup = new GameEndPopup(config);
         this._adapter = config.adapter;
+        this._bindNotify(this._directionButtons);
         this._bindNotify(this._adapter);
         this._bindNotify(this._endPopup);
     }
@@ -218,5 +221,37 @@ class GameEndPopup{
     close = function(){
         this._adapter.closePopup(this._popupId);
     }
+
+}
+
+class GameDirectionButtons{
+
+    _adapter;
+
+    _upButtonId;
+    _leftButtonId;
+    _rightButtonId;
+    _downButtonId;
+
+    constructor(config){
+        this._adapter = config.adapter;
+        this._upButtonId = config.upButtonId;
+        this._downButtonId = config.downButtonId;
+        this._leftButtonId = config.leftButtonId;
+        this._rightButtonId = config.rightButtonId;
+        this._setupListener();
+    }
+
+    _setupListener = function(){
+        this._adapter.setupClickListener(this._upButtonId, () => this._onClickHandler("up"));
+        this._adapter.setupClickListener(this._downButtonId, () => this._onClickHandler("down"));
+        this._adapter.setupClickListener(this._leftButtonId, () => this._onClickHandler("left"));
+        this._adapter.setupClickListener(this._rightButtonId, () => this._onClickHandler("right"));
+    }
+
+    _onClickHandler = function(direction){
+        this.notify({type: "direction", value: direction});
+    }.bind(this);
+
 
 }

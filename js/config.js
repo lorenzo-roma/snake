@@ -14,7 +14,11 @@ export default {
    view: {
       fieldDim: 10,
       size: 1000,
-      endPopupId: "end-popup"
+      endPopupId: "end-popup",
+      upButtonId: "btn-up",
+      downButtonId: "btn-down",
+      leftButtonId: "btn-left",
+      rightButtonId: "btn-right"
    },
    game:{
       fieldDim: 10,

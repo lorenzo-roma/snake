@@ -61,3 +61,7 @@ body {
     padding: 10%;
 }
 
+#mobile-controls{
+    display: none;
+}
+
