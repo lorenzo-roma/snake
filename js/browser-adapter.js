@@ -116,9 +116,9 @@ export default class BrowserAdapter {
 
     _getImagePath = function(content){
         switch(content){
-            case "food":  return "../assets/img/fruit.gif";
-            case "snake": return "../assets/img/snake.png";
-            default: return "../assets/img/clean.png";
+            case "food":  return "assets/img/fruit.gif";
+            case "snake": return "assets/img/snake.png";
+            default: return "assets/img/clean.png";
         }
     }
 }
