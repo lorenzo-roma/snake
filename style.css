@@ -10,7 +10,7 @@ canvas {
   
 body {
     font-family: "Bubblegum Sans";
-    font-size: 3em;
+    font-size: 4em;
     text-shadow: 0px 0px 15px black,
     0px 0px 10px black;
     color: white;
@@ -18,7 +18,7 @@ body {
     background-size: cover;
     background-position: center;
         margin: 0px;
-    padding: 1em;
+    padding: 5vh;
 }
 
 #wrapper{
@@ -27,6 +27,8 @@ body {
 }
 
 #stats-panel{
+    margin: 0 auto;
+    min-width: 200px; 
     flex: 0.3;
     text-align: center;
     display: flex;
@@ -47,3 +49,15 @@ body {
     left: 50%;
     transform: translate(-50%, 50%);
 }
+
+#end-popup{
+    background: url("./assets/img/game-over.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+.icon {
+    width: 70%;
+    padding: 10%;
+}
+

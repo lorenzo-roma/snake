@@ -3,19 +3,28 @@
     <head>
         <title>Snake</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="mobile.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bubblegum+Sans">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head> 
     <body>
         <div id="wrapper">
             <div id="stats-panel">
-                <div id="timer-panel"></div>
-                <div id="length-panel"></div>
+                <div>
+                    <img class="icon" src="./assets/img/clock.png">
+                    <div id="timer-panel"></div>
+                </div>
+                <div>
+                    <img class="icon" src="./assets/img/snake.png">
+                    <div id="length-panel">
+                    </div>
+                </div>
+            
             </div>
             <canvas id="main" width="700px" height="700px">
             </canvas>
         </div>
         <div class="d-none popup" id="end-popup" >
-            <div id="start-new-game"></div>
         </div>
     </body>
     <script type="module" src="js/game.js"></script>

@@ -1,0 +1,28 @@
+@media only screen and (max-width: 800px) {
+    #wrapper{
+        flex-direction: column;
+    }
+
+    .icon{
+        width:30%;
+    }
+
+    #stats-panel{
+        flex-direction:row;
+    }
+
+    #stats-panel > div {
+        flex: 1
+    }
+
+    canvas{
+        width: 100%;
+        margin-top: 10%;
+    }
+
+    body{
+        font-size: 3em;
+    }
+
+
+  }

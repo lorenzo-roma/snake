@@ -2,7 +2,8 @@
 
 export default class GameView {
 
-
+    _observers = [];
+    _adapter;
     _field;
     _stats;
     _endPopup;
@@ -11,17 +12,41 @@ export default class GameView {
         this._field = new GameFieldView(config);
         this._stats = new GameStatsView(config);
         this._endPopup = new GameEndPopup(config);
+        this._adapter = config.adapter;
+        this._bindNotify(this._adapter);
+        this._bindNotify(this._endPopup);
     }
 
-    init = function(){
+    _bindNotify = function(observable){
+        observable.notify = this._notify;
+    }.bind(this);
+
+    addObserver = function(observer){this._observers.push(observer);}
+
+    _notify = function(value){
+        this._observers.forEach(obs=>obs.onInputEvent(value));
+    }.bind(this);
+
+    _init = function(){
+        this._closePopups();
+        this._clean();
         this._field.drawBackground();
         this._field.drawBorders();
+    }
+
+    _closePopups = function(){
+        this._endPopup.close();
+    }
+
+    _clean = function(){
+        this._adapter.clean();
     }
 
 
     update = function(model){
         switch(model.getState()){
-            case "ended": this._showEndPopup();
+            case "ended": this._showEndPopup(); break;
+            case "setup": this._init(); break;
             default: {
                 this._field.update(model.getField());
                 this._stats.update(model.getStats());
@@ -110,7 +135,7 @@ class GameFieldView{
     }
 
     drawBackground = function(){
-        this._drawBackgroundHandler(this.field.width, this.field.height)
+        this._drawBackgroundHandler()
     }.bind(this);
 
     drawContent = function(){
@@ -168,17 +193,30 @@ class GameCellView{
 
 class GameEndPopup{
 
-    _displayPopupHandler;
 
     _popupId;
+    _adapter;
 
     constructor(config){
-        this._displayPopupHandler = config.adapter.displayPopup;
         this._popupId = config.endPopupId;
+        this._adapter = config.adapter;
+        this._setupListener();
     }
 
     display = function(){
-        this._displayPopupHandler(this._popupId);
+        this._adapter.displayPopup(this._popupId);
+    }
+
+    _setupListener = function(){
+        this._adapter.setupClickListener(this._popupId, this._onClickHandler);
+    }
+
+    _onClickHandler = function(){
+        this.notify({"type":"newGame"});
+    }.bind(this);
+
+    close = function(){
+        this._adapter.closePopup(this._popupId);
     }
 
 }

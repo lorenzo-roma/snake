@@ -17,27 +17,35 @@ export default class GameModel {
 
     constructor(config) {
         this._speed = config.speed;
+        this._field.dim = config.fieldDim;
+        this.init();
+    }
+
+    init = function(){
         this._state = "setup";
-        this._field.cells = this._initCells(config.fieldDim);
-        for (let i = 0; i < config.fieldDim; i++) {
-            for (let j = 0; j < config.fieldDim; j++) {
+        this._field.cells = this._initCells();
+        for (let i = 0; i < this._field.dim; i++) {
+            for (let j = 0; j < this._field.dim; j++) {
                 this._field.cells[i][j] = new Cell(i, j);
             }
         }
         this._snake = new Snake();
+        this._notify();
     }
 
     addObserver = (observer) => this._observers.push(observer);
 
     setCurrentDirection = (value) =>this._currentDirection = value;
 
+    getCurrentDirection = () => this._currentDirection;
+
     _notify = ()=>this._observers.forEach(observer=>observer.update(this));
 
-    _initCells = function (dim) {
+    _initCells = function () {
         const matrix = [];
-        for (let i = 0; i < dim; i++) {
+        for (let i = 0; i < this._field.dim; i++) {
             matrix[i] = [];
-            for (let j = 0; j < dim; j++) {
+            for (let j = 0; j < this._field.dim; j++) {
                 matrix[i][j] = undefined;
             }
         }
@@ -74,23 +82,26 @@ export default class GameModel {
     }
 
     _spawnSnake = function(){
-        const randomPosition = this._getRandomPosition();
+        const randomPosition = this._getRandomPositionAvailable();
         this._snake.spawn(this._field.cells[randomPosition.x][randomPosition.y]);
     }
 
-    _getRandomPosition = function(){
-        const x = Math.floor(Math.random() * this._field.cells.length);
-        const y = Math.floor(Math.random() * this._field.cells.length);
-        return {x: x, y: y};
+    _getRandomPositionAvailable = function(){
+        const availablePositions = [];
+        for(let i = 0; i < this._field.cells.length; i++){
+            for(let j = 0; j< this._field.cells.length; j++){
+                if(this._isPositionAvailable({x: i, y: j})){
+                    availablePositions.push({x: i, y: j});
+                }
+            }
+        }
+        const index = Math.floor(Math.random() * availablePositions.length)
+        return availablePositions[index];
     }
 
     _spawnFood = function(count){
         for(let i = 0; i<count; i++){
-            let randomPosition;
-            do{
-                randomPosition = this._getRandomPosition();
-            } while(!this._isPositionAvailable(randomPosition));
-    
+            const randomPosition = this._getRandomPositionAvailable();
             this._field.cells[randomPosition.x][randomPosition.y].putFood();
         }
     }

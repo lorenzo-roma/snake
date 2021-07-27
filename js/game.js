@@ -1,24 +1,18 @@
 import GameView from "./view.js";
 import GameModel from "./model.js";
 import GameController from "./controller.js"
-import HTMLAdapter from "./html-adapter.js";
 import BrowserAdapter from "./browser-adapter.js";
-
 import config from "./config.js";
 
-const htmlAdapter = new HTMLAdapter(config.adapter);
-config.view.adapter = htmlAdapter;
+const browserAdapter = new BrowserAdapter(config.adapter);
+config.view.adapter = browserAdapter;
 
 const view =  new GameView(config.view);
 const game = new GameModel(config.game);
-
-const browserAdapter= new BrowserAdapter();
-const controller = new GameController(browserAdapter);
-controller.connectTo(game);
+const controller = new GameController();
 
 game.addObserver(view);
+view.addObserver(controller);
+controller.connectTo(game);
 
-
-view.init();
-
-game.start();
+controller.startNewGame();
