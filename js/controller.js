@@ -4,9 +4,6 @@ export default class GameController{
 
     _controlled;
 
-    constructor(){
-    }
-
     connectTo = function(game){this._controlled = game;}
     
 

@@ -25,7 +25,6 @@ export default class BrowserAdapter {
         document.onkeydown = this._handleInput;
     }
 
-
     setupClickListener = function(id, callback){
         document.getElementById(id).addEventListener("click", callback);
     }
