@@ -51,7 +51,7 @@ body {
 }
 
 #end-popup{
-    background: url("/../assets/img/game-over.jpeg");
+    background: url("./assets/img/game-over.jpeg");
     background-size: cover;
     background-position: center;
 }
