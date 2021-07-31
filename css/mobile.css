@@ -36,7 +36,7 @@
     }
     
     .button{
-        background-image: url("/assets/img/button.png");
+        background-image: url("../assets/img/button.png");
         background-position: center;
         background-size: cover;
         width: 10vw;
@@ -44,7 +44,7 @@
     }
 
     .button:active:hover{
-        background-image: url("/assets/img/button-pressed.png");
+        background-image: url("../assets/img/button-pressed.png");
     }
 
     #second-row{

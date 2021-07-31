@@ -14,7 +14,7 @@ body {
     text-shadow: 0px 0px 15px black,
     0px 0px 10px black;
     color: white;
-    background: url('/assets/img/background.png');
+    background: url('../assets/img/background.png');
     background-size: cover;
     background-position: center;
         margin: 0px;
